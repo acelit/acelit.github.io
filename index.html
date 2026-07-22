@@ -684,32 +684,8 @@ footer.foot a:hover { color: var(--spot); border-bottom-color: var(--spot); }
         <h2><span class="num">§01</span>深度文章</h2>
       </div>
 
-      <div class="articles">
-        <a href="https://acelit.github.io/h/graph-engineering.html" class="row" target="_blank" rel="noopener">
-          <div class="idx">AGENT 架构</div>
-          <div class="core">
-            <h3>Graph Engineering — 从循环到图的范式跃迁</h3>
-            <p class="dek">2026 年 Agent 架构的一次控制权搬家：从"模型自己转圈"到"工程师先画图、模型只填空"，两种骨架的十项工程对比。</p>
-          </div>
-          <div class="date">2026·07·22</div>
-        </a>
-        <a href="https://acelit.github.io/h/awesome-llm-apps-nav.html" class="row" target="_blank" rel="noopener">
-          <div class="idx">AGENT · 工具导航</div>
-          <div class="core">
-            <h3>Awesome LLM Apps — 一份可用可读的应用导航</h3>
-            <p class="dek">把当下最值得看的 LLM 应用按方向拆分成一张导航表：能上手、能借鉴、能顺着做二次改造——不堆链接，只留自己读过的。</p>
-          </div>
-          <div class="date">2026·07·18</div>
-        </a>
-        <a href="https://acelit.github.io/h/3-skills-html-workflow.html" class="row" target="_blank" rel="noopener">
-          <div class="idx">写作工作流</div>
-          <div class="core">
-            <h3>三个 Skill 串起来的 HTML 工作流</h3>
-            <p class="dek">从深度稿到发布成图、从发布成图到讲解视频——把三个 Skill 串成一条闭环，把"写完就完"变成"写完就能发四五个地方"。</p>
-          </div>
-          <div class="date">2026·07·12</div>
-        </a>
-      </div>
+      <div class="articles" data-hb-list="articles"></div>
+      <nav class="hb-pager" data-hb-pager="articles" aria-label="深度文章分页" hidden></nav>
     </section>
 
     <section class="slab" id="notes">
@@ -717,20 +693,8 @@ footer.foot a:hover { color: var(--spot); border-bottom-color: var(--spot); }
         <h2><span class="num">§02</span>图文笔记</h2>
       </div>
 
-      <div class="notes">
-        <a href="https://acelit.github.io/h/graph-engineering.html" target="_blank" rel="noopener">
-          <div class="tag cat-agent">AGENT 架构 · 一图看懂</div>
-          <h3>一张图看懂 Loop vs Graph</h3>
-          <div class="thumb a" aria-hidden="true"></div>
-          <div class="date">2026·07·20</div>
-        </a>
-        <a href="https://acelit.github.io/h/ai-agent-architecture-bilingual.html" target="_blank" rel="noopener">
-          <div class="tag cat-agent">AGENT 架构 · 中英双语</div>
-          <h3>AI Agent 架构（中英双语）</h3>
-          <div class="thumb d" aria-hidden="true"></div>
-          <div class="date">2026·07·14</div>
-        </a>
-      </div>
+      <div class="notes" data-hb-list="notes"></div>
+      <nav class="hb-pager" data-hb-pager="notes" aria-label="图文笔记分页" hidden></nav>
     </section>
 
     <section class="slab" id="videos">
@@ -738,25 +702,221 @@ footer.foot a:hover { color: var(--spot); border-bottom-color: var(--spot); }
         <h2><span class="num">§03</span>短视频</h2>
       </div>
 
-      <div class="video-featured">
-        <div class="player">
-          <video controls preload="metadata" playsinline poster="">
-            <source src="yushu-tech.mp4" type="video/mp4" />
-            你的浏览器暂不支持内嵌视频播放，可 <a href="yushu-tech.mp4">直接下载 MP4</a>。
-          </video>
-        </div>
-        <div class="meta">
-          <span class="badge">FEATURED · 讲解</span>
-          <h3>一个视频看懂宇树科技</h3>
-          <p>把宇树的产品线、技术底盘、订单结构与在人形机器人赛道的位置一次讲透——原速偏慢，这一版是 <b>1.5×</b> 无字幕版，节奏更紧。</p>
-          <div class="facts">
-            <span><b>时长</b><span>约 6 分钟</span></span>
-            <span><b>发布</b><span>2026·07·21</span></span>
-          </div>
-        </div>
-      </div>
+      <div class="videos" data-hb-list="videos"></div>
+      <nav class="hb-pager" data-hb-pager="videos" aria-label="短视频分页" hidden></nav>
     </section>
   </main>
 </div>
+
+<style>
+/* ===== github-blog runtime CSS (pagination + videos grid + empty state) ===== */
+.videos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+}
+.videos .vcard {
+  display: flex; flex-direction: column;
+  border: 1px solid var(--rule);
+  background: var(--paper-lift);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+}
+.videos .vcard .player {
+  background: oklch(8% 0.01 260);
+  aspect-ratio: 16 / 9;
+  display: flex; align-items: center; justify-content: center;
+}
+.videos .vcard video {
+  width: 100%; height: 100%;
+  display: block;
+  object-fit: contain;
+  background: oklch(8% 0.01 260);
+}
+.videos .vcard .body { padding: var(--space-lg); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.videos .vcard .badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent);
+  padding: 3px 8px;
+  border: 1px solid var(--accent-deep);
+  align-self: flex-start;
+}
+.videos .vcard .badge::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--spot);
+}
+.videos .vcard h3 {
+  font-family: var(--font-display); font-style: normal; font-weight: 800;
+  font-size: 20px; line-height: 1.2; letter-spacing: -.01em;
+  margin: 0; overflow-wrap: anywhere; min-width: 0;
+}
+.videos .vcard p {
+  font-family: var(--font-body); font-size: 14.5px; color: var(--ink-soft);
+  line-height: 1.5; margin: 0;
+}
+.videos .vcard .facts {
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute);
+  letter-spacing: .06em;
+  display: flex; justify-content: space-between; gap: var(--space-md);
+  border-top: 1px dotted var(--rule); padding-top: 10px; margin-top: 4px;
+}
+.videos .vcard .facts b { color: var(--ink); font-weight: 500; }
+
+/* pager */
+.hb-pager {
+  margin-top: var(--space-xl);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: var(--ink-mute);
+}
+.hb-pager button {
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink); background: var(--paper-lift);
+  border: 1px solid var(--rule);
+  padding: 8px 14px; cursor: pointer;
+  letter-spacing: .06em; text-transform: uppercase;
+  transition: color .18s var(--ease-out), border-color .18s var(--ease-out), background .18s var(--ease-out);
+}
+.hb-pager button:hover:not([disabled]),
+.hb-pager button:focus-visible:not([disabled]) {
+  color: var(--accent); border-color: var(--accent-deep); background: var(--paper-panel);
+}
+.hb-pager button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hb-pager button[disabled] { opacity: .35; cursor: not-allowed; }
+.hb-pager .info { font-variant-numeric: tabular-nums; }
+.hb-empty {
+  padding: var(--space-xl) 0;
+  font-family: var(--font-mono);
+  font-size: 12px; color: var(--ink-mute);
+  letter-spacing: .06em;
+  border: 1px dashed var(--rule);
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .videos { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+
+<script id="__blog_data__" type="application/json">{"articles": [{"id": "graph-engineering", "title": "Graph Engineering — 从循环到图的范式跃迁", "dek": "2026 年 Agent 架构的一次控制权搬家：从\"模型自己转圈\"到\"工程师先画图、模型只填空\"，两种骨架的十项工程对比。", "tag": "AGENT 架构", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-22"}, {"id": "awesome-llm-apps", "title": "Awesome LLM Apps — 一份可用可读的应用导航", "dek": "把当下最值得看的 LLM 应用按方向拆分成一张导航表：能上手、能借鉴、能顺着做二次改造——不堆链接，只留自己读过的。", "tag": "AGENT · 工具导航", "url": "https://acelit.github.io/h/awesome-llm-apps-nav.html", "date": "2026-07-18"}, {"id": "3-skills-html-workflow", "title": "三个 Skill 串起来的 HTML 工作流", "dek": "从深度稿到发布成图、从发布成图到讲解视频——把三个 Skill 串成一条闭环，把\"写完就完\"变成\"写完就能发四五个地方\"。", "tag": "写作工作流", "url": "https://acelit.github.io/h/3-skills-html-workflow.html", "date": "2026-07-12"}], "notes": [{"id": "loop-vs-graph-visual", "title": "一张图看懂 Loop vs Graph", "tag": "AGENT 架构 · 一图看懂", "cat": "agent", "thumb": "a", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-20"}, {"id": "ai-agent-arch-bilingual", "title": "AI Agent 架构（中英双语）", "tag": "AGENT 架构 · 中英双语", "cat": "agent", "thumb": "d", "url": "https://acelit.github.io/h/ai-agent-architecture-bilingual.html", "date": "2026-07-14"}], "videos": [{"id": "yushu-tech", "title": "一个视频看懂宇树科技", "desc": "把宇树的产品线、技术底盘、订单结构与在人形机器人赛道的位置一次讲透——原速偏慢，这一版是 1.5× 无字幕版，节奏更紧。", "duration": "约 6 分钟", "badge": "FEATURED · 讲解", "file": "yushu-tech.mp4", "date": "2026-07-21"}]}</script>
+<script>
+(function () {
+  const PAGE_SIZE = 10;
+  let data;
+  try {
+    data = JSON.parse(document.getElementById('__blog_data__').textContent);
+  } catch (e) { data = { articles: [], notes: [], videos: [] }; }
+  ['articles','notes','videos'].forEach(k => {
+    (data[k] || []).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  });
+
+  // page cursor per module
+  const pages = { articles: 1, notes: 1, videos: 1 };
+  const thumbClasses = ['a','b','c','d','e','f'];
+
+  const esc = s => String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  const fmtDate = s => (s || '').replace(/-/g, '·');
+
+  function renderArticle(item) {
+    return (
+      '<a href="' + esc(item.url || '#') + '" class="row" target="_blank" rel="noopener">'
+      + '<div class="idx">' + esc(item.tag || '') + '</div>'
+      + '<div class="core">'
+      + '<h3>' + esc(item.title || '') + '</h3>'
+      + '<p class="dek">' + esc(item.dek || '') + '</p>'
+      + '</div>'
+      + '<div class="date">' + esc(fmtDate(item.date)) + '</div>'
+      + '</a>'
+    );
+  }
+  function renderNote(item, idx) {
+    const thumb = item.thumb && thumbClasses.indexOf(item.thumb) >= 0
+      ? item.thumb : thumbClasses[idx % thumbClasses.length];
+    const catClass = item.cat ? ('cat-' + esc(item.cat)) : '';
+    return (
+      '<a href="' + esc(item.url || '#') + '" target="_blank" rel="noopener">'
+      + '<div class="tag ' + catClass + '">' + esc(item.tag || '') + '</div>'
+      + '<h3>' + esc(item.title || '') + '</h3>'
+      + '<div class="thumb ' + esc(thumb) + '" aria-hidden="true"></div>'
+      + '<div class="date">' + esc(fmtDate(item.date)) + '</div>'
+      + '</a>'
+    );
+  }
+  function renderVideo(item) {
+    const src = item.file || item.url || '';
+    const badge = item.badge || 'FEATURED · 讲解';
+    return (
+      '<div class="vcard">'
+      + '<div class="player">'
+      + (src
+          ? '<video controls preload="metadata" playsinline><source src="' + esc(src) + '" type="video/mp4">你的浏览器不支持视频播放，请 <a href="' + esc(src) + '">直接下载 MP4</a>。</video>'
+          : '<div style="padding:24px;color:#888;font-family:var(--font-mono);font-size:12px;">暂无视频源</div>')
+      + '</div>'
+      + '<div class="body">'
+      + '<span class="badge">' + esc(badge) + '</span>'
+      + '<h3>' + esc(item.title || '') + '</h3>'
+      + (item.desc ? '<p>' + esc(item.desc) + '</p>' : '')
+      + '<div class="facts"><span><b>时长</b> ' + esc(item.duration || '') + '</span><span><b>发布</b> ' + esc(fmtDate(item.date)) + '</span></div>'
+      + '</div>'
+      + '</div>'
+    );
+  }
+
+  function render(kind) {
+    const list = data[kind] || [];
+    const total = list.length;
+    const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (pages[kind] > pageCount) pages[kind] = pageCount;
+    const cur = pages[kind];
+    const slice = list.slice((cur - 1) * PAGE_SIZE, cur * PAGE_SIZE);
+
+    const container = document.querySelector('[data-hb-list="' + kind + '"]');
+    if (!container) return;
+    if (total === 0) {
+      container.innerHTML = '<div class="hb-empty">暂无内容</div>';
+    } else {
+      let html = '';
+      if (kind === 'articles') slice.forEach((it) => html += renderArticle(it));
+      else if (kind === 'notes') slice.forEach((it, i) => html += renderNote(it, (cur - 1) * PAGE_SIZE + i));
+      else if (kind === 'videos') slice.forEach((it) => html += renderVideo(it));
+      container.innerHTML = html;
+    }
+
+    const pager = document.querySelector('[data-hb-pager="' + kind + '"]');
+    if (!pager) return;
+    if (pageCount <= 1) {
+      pager.setAttribute('hidden', '');
+      pager.innerHTML = '';
+      return;
+    }
+    pager.removeAttribute('hidden');
+    pager.innerHTML =
+      '<button type="button" data-act="prev"' + (cur <= 1 ? ' disabled' : '') + '>← 上一页</button>'
+      + '<span class="info">第 ' + cur + ' / ' + pageCount + ' 页 · 共 ' + total + ' 条</span>'
+      + '<button type="button" data-act="next"' + (cur >= pageCount ? ' disabled' : '') + '>下一页 →</button>';
+    pager.querySelectorAll('button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        const act = btn.getAttribute('data-act');
+        if (act === 'prev' && cur > 1) pages[kind] = cur - 1;
+        else if (act === 'next' && cur < pageCount) pages[kind] = cur + 1;
+        render(kind);
+        const sec = document.getElementById(kind === 'articles' ? 'deep' : kind);
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  ['articles','notes','videos'].forEach(render);
+})();
+</script>
 </body>
 </html>
