@@ -850,18 +850,25 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
   background: oklch(8% 0.01 260);
 }
 .videos .vcard .body { padding: var(--space-lg); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.videos .vcard .badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--accent);
-  padding: 3px 8px;
-  border: 1px solid var(--accent-deep);
+.videos .vcard .badges {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow: hidden;
   align-self: flex-start;
+  max-width: 100%;
 }
-.videos .vcard .badge::before {
-  content: ""; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--spot);
+.videos .vcard .badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: .06em;
+  color: var(--accent);
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: oklch(24% 0.05 230 / .4);
+  border: 1px solid var(--accent-deep);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .videos .vcard h3 {
   font-family: var(--font-display); font-style: normal; font-weight: 800;
@@ -919,7 +926,7 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
 }
 </style>
 
-<script id="__blog_data__" type="application/json">{"articles": [{"id": "从-争夺点击-到-争夺被ai引用", "title": "从\"争夺点击\"到\"争夺被AI引用\"", "url": "https://acelit.github.io/h/from-clicks-to-ai-citations.html", "date": "2026-07-22", "tag": "AI 内容产业", "dek": "AI 答案里被引用的链接只有 12% 出现在 Google 前十——媒体行业的下一个三年生死局：从 SEO 到 AEO。"}, {"id": "长视频已死-ai短剧称王", "title": "长视频已死，AI短剧称王", "url": "https://acelit.github.io/h/long-video-dead-ai-shortdrama-wins.html", "date": "2026-07-22", "tag": "AI 内容产业", "dek": "红果短剧日活破亿、爱奇艺由盈转亏——不是一场竞争，而是娱乐工业对'时间颗粒度'的重新定价与改朝换代。"}, {"id": "和你的ai女友说再见吧", "title": "和你的AI女友说再见吧", "url": "https://acelit.github.io/h/say-goodbye-to-ai-girlfriend.html", "date": "2026-07-22", "tag": "AI 非共识", "dek": "7·15 监管落地，豆包/通义/元宝同日关停自建智能体——情感陪伴 AI 品类的产品级熄灯仪式，以及谁还能活下去。"}, {"id": "graph-engineering", "title": "Graph Engineering — 从循环到图的范式跃迁", "dek": "2026 年 Agent 架构的一次控制权搬家：从\"模型自己转圈\"到\"工程师先画图、模型只填空\"，两种骨架的十项工程对比。", "tag": "AGENT 架构", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-22"}, {"id": "awesome-llm-apps", "title": "Awesome LLM Apps — 一份可用可读的应用导航", "dek": "把当下最值得看的 LLM 应用按方向拆分成一张导航表：能上手、能借鉴、能顺着做二次改造——不堆链接，只留自己读过的。", "tag": "AGENT · 工具导航", "url": "https://acelit.github.io/h/awesome-llm-apps-nav.html", "date": "2026-07-22"}, {"id": "3-skills-html-workflow", "title": "三个 Skill 串起来的 HTML 工作流", "dek": "从深度稿到发布成图、从发布成图到讲解视频——把三个 Skill 串成一条闭环，把\"写完就完\"变成\"写完就能发四五个地方\"。", "tag": "写作工作流", "url": "https://acelit.github.io/h/3-skills-html-workflow.html", "date": "2026-07-22"}], "notes": [{"id": "ai-agent-arch-bilingual", "title": "AI Agent 架构（中英双语）", "tag": "AGENT 架构 · 中英双语", "cat": "agent", "thumb": "d", "url": "https://acelit.github.io/h/ai-agent-architecture-bilingual.html", "date": "2026-07-22", "image": "ai-agent-arch-bilingual.jpg"}, {"id": "agent-skills-rank", "title": "Agent Skills 排行榜 · 15 个精选", "url": "https://acelit.github.io/h/agent-skills-rank.html", "date": "2026-07-22", "tag": "AGENT · Skills 榜单", "cat": "agent", "image": "agent-skills-rank.jpg"}], "videos": [{"id": "wc-557acacd", "title": "Meta 投毒事件全曝光", "desc": "扎克伯格雇几百人假扮未成年人，向 ChatGPT / Gemini / Character AI 投毒 4.5 万条极端样本——WIRED 独家调查揭开的真相，与「行业标准做法」这句辩解之间。", "duration": "1 分 38 秒", "badge": "FEATURED · 讲解", "file": "wc-557acacd.mp4", "date": "2026-07-22"}, {"id": "wc-fbccb400", "title": "英伟达发明了一种「Token 贷」", "desc": "把 GPU 打包塞给创业公司、产品收入分一份、云收入再分一份——比消费贷更狠的新欠条：你烧掉的每一个 Token，都是明天要还的利息。", "duration": "2 分 4 秒", "badge": "FEATURED · 讲解", "file": "wc-fbccb400.mp4", "date": "2026-07-22"}, {"id": "wc-88b54177", "title": "Grok 4.5 翻车", "desc": "刚吹完追平 Claude，转头就被安全研究员抓包——命令行工具偷偷把整个代码库、Claude 登录凭据和 API 密钥打包上传。能力三个月能追平，信任崩了是一辈子的事。", "duration": "1 分 3 秒", "badge": "FEATURED · 讲解", "file": "wc-88b54177.mp4", "date": "2026-07-22"}, {"id": "wc-0f3cb968", "title": "阿里靠一笔投资赚出一整年净利润", "desc": "长鑫科技冲三万亿 IPO，阿里持股 4.97%（比创始人还多）；智谱、月之暗面、宇树的股东名单几乎全是它——巨头正在同框合投未来。", "duration": "1 分 0 秒", "badge": "FEATURED · 讲解", "file": "wc-0f3cb968.mp4", "date": "2026-07-22"}, {"id": "wc-8b8f1f6f", "title": "Kimi K3 深夜空降，把美股干了", "desc": "2.8 万亿参数、全球最大开源大模型；前端代码竞技场 1679 分把 Claude 和 GPT 按在地上摩擦——最狠的是，它还开源。", "duration": "58 秒", "badge": "FEATURED · 讲解", "file": "wc-8b8f1f6f.mp4", "date": "2026-07-22"}, {"id": "wc-40d7bd11", "title": "开源 AI 把闭源大厂逼到墙角", "desc": "Kimi K3 · DeepSeek V4 · MiniMax M3 三连击——开源追赶闭源的差距已经从「以年计」变成「以月计」。中国实验室正在改写规则。", "duration": "1 分 0 秒", "badge": "FEATURED · 讲解", "file": "wc-40d7bd11.mp4", "date": "2026-07-22"}, {"id": "embodied-ai", "title": "一个视频看懂具身智能", "date": "2026-07-22", "desc": "把「具身智能」从概念讲到落地：机器人从「能思考」到「能干活」差在哪、当下国内外主要玩家、以及未来 3 年最可能爆发的场景。", "duration": "1 分 6 秒", "badge": "FEATURED · 讲解", "file": "embodied-ai.mp4"}, {"id": "yushu-tech", "title": "一个视频看懂宇树科技", "desc": "把宇树的产品线、技术底盘、订单结构与在人形机器人赛道的位置一次讲透。", "duration": "1 分 14 秒", "badge": "FEATURED · 讲解", "file": "yushu-tech.mp4", "date": "2026-07-22"}]}</script>
+<script id="__blog_data__" type="application/json">{"articles": [{"id": "从-争夺点击-到-争夺被ai引用", "title": "从\"争夺点击\"到\"争夺被AI引用\"", "url": "https://acelit.github.io/h/from-clicks-to-ai-citations.html", "date": "2026-07-22", "tag": "AI 内容产业", "dek": "AI 答案里被引用的链接只有 12% 出现在 Google 前十——媒体行业的下一个三年生死局：从 SEO 到 AEO。"}, {"id": "长视频已死-ai短剧称王", "title": "长视频已死，AI短剧称王", "url": "https://acelit.github.io/h/long-video-dead-ai-shortdrama-wins.html", "date": "2026-07-22", "tag": "AI 内容产业", "dek": "红果短剧日活破亿、爱奇艺由盈转亏——不是一场竞争，而是娱乐工业对'时间颗粒度'的重新定价与改朝换代。"}, {"id": "和你的ai女友说再见吧", "title": "和你的AI女友说再见吧", "url": "https://acelit.github.io/h/say-goodbye-to-ai-girlfriend.html", "date": "2026-07-22", "tag": "AI 非共识", "dek": "7·15 监管落地，豆包/通义/元宝同日关停自建智能体——情感陪伴 AI 品类的产品级熄灯仪式，以及谁还能活下去。"}, {"id": "graph-engineering", "title": "Graph Engineering — 从循环到图的范式跃迁", "dek": "2026 年 Agent 架构的一次控制权搬家：从\"模型自己转圈\"到\"工程师先画图、模型只填空\"，两种骨架的十项工程对比。", "tag": "AGENT 架构", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-22"}, {"id": "awesome-llm-apps", "title": "Awesome LLM Apps — 一份可用可读的应用导航", "dek": "把当下最值得看的 LLM 应用按方向拆分成一张导航表：能上手、能借鉴、能顺着做二次改造——不堆链接，只留自己读过的。", "tag": "AGENT · 工具导航", "url": "https://acelit.github.io/h/awesome-llm-apps-nav.html", "date": "2026-07-22"}, {"id": "3-skills-html-workflow", "title": "三个 Skill 串起来的 HTML 工作流", "dek": "从深度稿到发布成图、从发布成图到讲解视频——把三个 Skill 串成一条闭环，把\"写完就完\"变成\"写完就能发四五个地方\"。", "tag": "写作工作流", "url": "https://acelit.github.io/h/3-skills-html-workflow.html", "date": "2026-07-22"}], "notes": [{"id": "ai-agent-arch-bilingual", "title": "AI Agent 架构（中英双语）", "tag": "AGENT 架构 · 中英双语", "cat": "agent", "thumb": "d", "url": "https://acelit.github.io/h/ai-agent-architecture-bilingual.html", "date": "2026-07-22", "image": "ai-agent-arch-bilingual.jpg"}, {"id": "agent-skills-rank", "title": "Agent Skills 排行榜 · 15 个精选", "url": "https://acelit.github.io/h/agent-skills-rank.html", "date": "2026-07-22", "tag": "AGENT · Skills 榜单", "cat": "agent", "image": "agent-skills-rank.jpg"}], "videos": [{"id": "wc-557acacd", "title": "Meta 投毒事件全曝光", "desc": "扎克伯格雇几百人假扮未成年人，向 ChatGPT / Gemini / Character AI 投毒 4.5 万条极端样本——WIRED 独家调查揭开的真相，与「行业标准做法」这句辩解之间。", "duration": "1 分 38 秒", "tags": ["AI 安全", "大厂内幕"], "file": "wc-557acacd.mp4", "date": "2026-07-22"}, {"id": "wc-fbccb400", "title": "英伟达发明了一种「Token 贷」", "desc": "把 GPU 打包塞给创业公司、产品收入分一份、云收入再分一份——比消费贷更狠的新欠条：你烧掉的每一个 Token，都是明天要还的利息。", "duration": "2 分 4 秒", "tags": ["英伟达", "AI 泡沫", "商业模式"], "file": "wc-fbccb400.mp4", "date": "2026-07-22"}, {"id": "wc-88b54177", "title": "Grok 4.5 翻车", "desc": "刚吹完追平 Claude，转头就被安全研究员抓包——命令行工具偷偷把整个代码库、Claude 登录凭据和 API 密钥打包上传。能力三个月能追平，信任崩了是一辈子的事。", "duration": "1 分 3 秒", "tags": ["AI 安全", "xAI"], "file": "wc-88b54177.mp4", "date": "2026-07-22"}, {"id": "wc-0f3cb968", "title": "阿里靠一笔投资赚出一整年净利润", "desc": "长鑫科技冲三万亿 IPO，阿里持股 4.97%（比创始人还多）；智谱、月之暗面、宇树的股东名单几乎全是它——巨头正在同框合投未来。", "duration": "1 分 0 秒", "tags": ["投资", "存储芯片", "阿里"], "file": "wc-0f3cb968.mp4", "date": "2026-07-22"}, {"id": "wc-8b8f1f6f", "title": "Kimi K3 深夜空降，把美股干了", "desc": "2.8 万亿参数、全球最大开源大模型；前端代码竞技场 1679 分把 Claude 和 GPT 按在地上摩擦——最狠的是，它还开源。", "duration": "58 秒", "tags": ["开源大模型", "Kimi"], "file": "wc-8b8f1f6f.mp4", "date": "2026-07-22"}, {"id": "wc-40d7bd11", "title": "开源 AI 把闭源大厂逼到墙角", "desc": "Kimi K3 · DeepSeek V4 · MiniMax M3 三连击——开源追赶闭源的差距已经从「以年计」变成「以月计」。中国实验室正在改写规则。", "duration": "1 分 0 秒", "tags": ["开源大模型", "行业观察"], "file": "wc-40d7bd11.mp4", "date": "2026-07-22"}, {"id": "embodied-ai", "title": "一个视频看懂具身智能", "date": "2026-07-22", "desc": "把「具身智能」从概念讲到落地：机器人从「能思考」到「能干活」差在哪、当下国内外主要玩家、以及未来 3 年最可能爆发的场景。", "duration": "1 分 6 秒", "tags": ["具身智能", "机器人"], "file": "embodied-ai.mp4"}, {"id": "yushu-tech", "title": "一个视频看懂宇树科技", "desc": "把宇树的产品线、技术底盘、订单结构与在人形机器人赛道的位置一次讲透。", "duration": "1 分 14 秒", "tags": ["机器人", "宇树科技"], "file": "yushu-tech.mp4", "date": "2026-07-22"}]}</script>
 <script>
 (function () {
   // ---- Theme toggle (dark/light) ----
@@ -1008,7 +1015,11 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
   }
   function renderVideo(item) {
     const src = item.file || item.url || '';
-    const badge = item.badge || 'FEATURED · 讲解';
+    let tags = Array.isArray(item.tags) ? item.tags.slice(0, 3) : [];
+    if (tags.length === 0 && item.badge) tags = [item.badge];
+    const tagsHtml = tags.length
+      ? '<div class="badges">' + tags.map((t) => '<span class="badge">' + esc(t) + '</span>').join('') + '</div>'
+      : '';
     return (
       '<div class="vcard">'
       + '<div class="player">'
@@ -1017,7 +1028,7 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
           : '<div style="padding:24px;color:#888;font-family:var(--font-mono);font-size:12px;">暂无视频源</div>')
       + '</div>'
       + '<div class="body">'
-      + '<span class="badge">' + esc(badge) + '</span>'
+      + tagsHtml
       + '<h3>' + esc(item.title || '') + '</h3>'
       + (item.desc ? '<p>' + esc(item.desc) + '</p>' : '')
       + '<div class="facts"><span><b>时长</b> ' + esc(item.duration || '') + '</span><span><b>发布</b> ' + esc(fmtDate(item.date)) + '</span></div>'
