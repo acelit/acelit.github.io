@@ -465,6 +465,13 @@ section.slab:first-of-type { border-top: 0; padding-top: var(--space-xl); }
   overflow: hidden;
   background: var(--paper-panel);
 }
+.notes .thumb img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.notes .thumb.has-image { background: var(--paper-panel); }
 /* six unique thumb signatures — pure CSS art, no fake photos */
 .notes .thumb.a { background:
   linear-gradient(135deg, transparent 47%, var(--accent) 47% 53%, transparent 53%) 0 0 / 24px 24px,
@@ -630,34 +637,40 @@ footer.foot a:hover { color: var(--spot); border-bottom-color: var(--spot); }
 
 /* ========== light mode overrides ========== */
 html.light-mode {
-  --paper: oklch(96% 0.008 85);
-  --paper-lift: oklch(93% 0.012 85);
-  --paper-panel: oklch(90% 0.015 85);
+  --paper: oklch(97% 0.012 82);
+  --paper-lift: oklch(94% 0.014 82);
+  --paper-panel: oklch(91% 0.016 82);
 
-  --ink: oklch(20% 0.02 260);
-  --ink-soft: oklch(38% 0.018 260);
-  --ink-mute: oklch(55% 0.014 260);
-  --ink-faint: oklch(70% 0.01 260);
+  --ink: oklch(22% 0.02 260);
+  --ink-soft: oklch(40% 0.018 260);
+  --ink-mute: oklch(56% 0.014 260);
+  --ink-faint: oklch(72% 0.01 260);
 
-  --rule: oklch(86% 0.006 85);
-  --rule-strong: oklch(70% 0.012 85);
+  --rule: oklch(88% 0.008 82);
+  --rule-strong: oklch(72% 0.014 82);
 
-  --accent: oklch(48% 0.16 245);
-  --accent-deep: oklch(38% 0.14 245);
-  --spot: oklch(55% 0.17 145);
+  --accent: oklch(46% 0.14 245);
+  --accent-deep: oklch(36% 0.12 245);
+  --spot: oklch(58% 0.16 145);
 }
 html.light-mode body::before {
   background:
-    repeating-linear-gradient(0deg, transparent 0 3px, oklch(80% 0.02 85 / .18) 3px 4px);
+    radial-gradient(1100px 700px at 92% -6%, oklch(90% 0.06 75 / .42), transparent 62%),
+    repeating-linear-gradient(0deg, transparent 0 11px, oklch(78% 0.02 82 / .06) 11px 12px),
+    repeating-linear-gradient(90deg, transparent 0 11px, oklch(78% 0.02 82 / .06) 11px 12px);
   mix-blend-mode: multiply;
 }
 html.light-mode .articles a.row:hover,
-html.light-mode .articles a.row:focus-visible { background: oklch(92% 0.012 85 / .6); }
+html.light-mode .articles a.row:focus-visible { background: oklch(93% 0.014 82 / .7); }
 html.light-mode .video-featured .player,
 html.light-mode .video-featured .player video,
 html.light-mode .videos .vcard .player,
 html.light-mode .videos .vcard video { background: oklch(96% 0.008 85); }
 html.light-mode .back-to-top { color: var(--paper); }
+html.light-mode .rail .channels a .qr-pop {
+  background: var(--paper);
+  box-shadow: 0 12px 32px oklch(0% 0 0 / .12);
+}
 
 /* ========== theme toggle & back-to-top ========== */
 .site-controls {
@@ -906,7 +919,7 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
 }
 </style>
 
-<script id="__blog_data__" type="application/json">{"articles": [{"id": "graph-engineering", "title": "Graph Engineering — 从循环到图的范式跃迁", "dek": "2026 年 Agent 架构的一次控制权搬家：从\"模型自己转圈\"到\"工程师先画图、模型只填空\"，两种骨架的十项工程对比。", "tag": "AGENT 架构", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-22"}, {"id": "awesome-llm-apps", "title": "Awesome LLM Apps — 一份可用可读的应用导航", "dek": "把当下最值得看的 LLM 应用按方向拆分成一张导航表：能上手、能借鉴、能顺着做二次改造——不堆链接，只留自己读过的。", "tag": "AGENT · 工具导航", "url": "https://acelit.github.io/h/awesome-llm-apps-nav.html", "date": "2026-07-18"}, {"id": "3-skills-html-workflow", "title": "三个 Skill 串起来的 HTML 工作流", "dek": "从深度稿到发布成图、从发布成图到讲解视频——把三个 Skill 串成一条闭环，把\"写完就完\"变成\"写完就能发四五个地方\"。", "tag": "写作工作流", "url": "https://acelit.github.io/h/3-skills-html-workflow.html", "date": "2026-07-12"}], "notes": [{"id": "loop-vs-graph-visual", "title": "一张图看懂 Loop vs Graph", "tag": "AGENT 架构 · 一图看懂", "cat": "agent", "thumb": "a", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-20"}, {"id": "ai-agent-arch-bilingual", "title": "AI Agent 架构（中英双语）", "tag": "AGENT 架构 · 中英双语", "cat": "agent", "thumb": "d", "url": "https://acelit.github.io/h/ai-agent-architecture-bilingual.html", "date": "2026-07-14"}], "videos": [{"id": "yushu-tech", "title": "一个视频看懂宇树科技", "desc": "把宇树的产品线、技术底盘、订单结构与在人形机器人赛道的位置一次讲透——原速偏慢，这一版是 1.5× 无字幕版，节奏更紧。", "duration": "约 6 分钟", "badge": "FEATURED · 讲解", "file": "yushu-tech.mp4", "date": "2026-07-21"}]}</script>
+<script id="__blog_data__" type="application/json">{"articles": [{"id": "graph-engineering", "title": "Graph Engineering — 从循环到图的范式跃迁", "dek": "2026 年 Agent 架构的一次控制权搬家：从\"模型自己转圈\"到\"工程师先画图、模型只填空\"，两种骨架的十项工程对比。", "tag": "AGENT 架构", "url": "https://acelit.github.io/h/graph-engineering.html", "date": "2026-07-22"}, {"id": "awesome-llm-apps", "title": "Awesome LLM Apps — 一份可用可读的应用导航", "dek": "把当下最值得看的 LLM 应用按方向拆分成一张导航表：能上手、能借鉴、能顺着做二次改造——不堆链接，只留自己读过的。", "tag": "AGENT · 工具导航", "url": "https://acelit.github.io/h/awesome-llm-apps-nav.html", "date": "2026-07-18"}, {"id": "3-skills-html-workflow", "title": "三个 Skill 串起来的 HTML 工作流", "dek": "从深度稿到发布成图、从发布成图到讲解视频——把三个 Skill 串成一条闭环，把\"写完就完\"变成\"写完就能发四五个地方\"。", "tag": "写作工作流", "url": "https://acelit.github.io/h/3-skills-html-workflow.html", "date": "2026-07-12"}], "notes": [{"id": "agent-skills-rank", "title": "Agent Skills 排行榜 · 15 个精选", "url": "https://acelit.github.io/h/agent-skills-rank.html", "date": "2026-07-22", "tag": "AGENT · Skills 榜单", "cat": "agent", "image": "agent-skills-rank.jpg"}, {"id": "ai-agent-arch-bilingual", "title": "AI Agent 架构（中英双语）", "tag": "AGENT 架构 · 中英双语", "cat": "agent", "thumb": "d", "url": "https://acelit.github.io/h/ai-agent-architecture-bilingual.html", "date": "2026-07-14"}], "videos": [{"id": "yushu-tech", "title": "一个视频看懂宇树科技", "desc": "把宇树的产品线、技术底盘、订单结构与在人形机器人赛道的位置一次讲透——原速偏慢，这一版是 1.5× 无字幕版，节奏更紧。", "duration": "约 6 分钟", "badge": "FEATURED · 讲解", "file": "yushu-tech.mp4", "date": "2026-07-21"}]}</script>
 <script>
 (function () {
   // ---- Theme toggle (dark/light) ----
@@ -980,11 +993,15 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
     const thumb = item.thumb && thumbClasses.indexOf(item.thumb) >= 0
       ? item.thumb : thumbClasses[idx % thumbClasses.length];
     const catClass = item.cat ? ('cat-' + esc(item.cat)) : '';
+    const hasImg = !!item.image;
+    const thumbHtml = hasImg
+      ? '<div class="thumb has-image" aria-hidden="true"><img src="' + esc(item.image) + '" alt="' + esc(item.title || '') + '" loading="lazy" /></div>'
+      : '<div class="thumb ' + esc(thumb) + '" aria-hidden="true"></div>';
     return (
       '<a href="' + esc(item.url || '#') + '" target="_blank" rel="noopener">'
       + '<div class="tag ' + catClass + '">' + esc(item.tag || '') + '</div>'
       + '<h3>' + esc(item.title || '') + '</h3>'
-      + '<div class="thumb ' + esc(thumb) + '" aria-hidden="true"></div>'
+      + thumbHtml
       + '<div class="date">' + esc(fmtDate(item.date)) + '</div>'
       + '</a>'
     );
