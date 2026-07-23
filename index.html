@@ -772,9 +772,39 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
 @media (prefers-reduced-motion: reduce) {
   * { transition-duration: .01ms !important; }
 }
+
+/* ========== mouse spotlight ========== */
+.spotlight-follow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(
+    480px 480px at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.18) 25%,
+    rgba(255, 255, 255, 0.05) 45%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  mix-blend-mode: soft-light;
+  transition: background .12s linear;
+}
+html.light-mode .spotlight-follow {
+  background: radial-gradient(
+    480px 480px at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(255, 210, 140, 0.55) 0%,
+    rgba(255, 200, 130, 0.28) 25%,
+    rgba(255, 200, 130, 0.10) 45%,
+    rgba(255, 200, 130, 0) 70%
+  );
+  mix-blend-mode: multiply;
+}
+@media (hover: none) { .spotlight-follow { display: none; } }
+@media (prefers-reduced-motion: reduce) { .spotlight-follow { display: none; } }
 </style>
 </head>
 <body>
+<div class="spotlight-follow" aria-hidden="true"></div>
 <div class="site-controls">
   <button type="button" class="theme-toggle" aria-label="切换深色/浅色模式" title="切换深色/浅色模式">
     <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1162,6 +1192,28 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
       ['articles','notes','videos'].forEach(render);
     });
   }
+})();
+</script>
+<script>
+// ========== mouse spotlight follow ==========
+(function(){
+  var noHover = matchMedia('(hover: none)').matches;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (noHover || reduced) return;
+  var root = document.documentElement;
+  var mx = window.innerWidth / 2;
+  var my = window.innerHeight / 2;
+  var raf = null;
+  function apply(){
+    root.style.setProperty('--spot-x', mx + 'px');
+    root.style.setProperty('--spot-y', my + 'px');
+    raf = null;
+  }
+  apply();
+  window.addEventListener('pointermove', function(e){
+    mx = e.clientX; my = e.clientY;
+    if (!raf) raf = requestAnimationFrame(apply);
+  }, { passive: true });
 })();
 </script>
 </body>
