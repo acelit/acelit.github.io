@@ -224,7 +224,9 @@ body::before {
   border-bottom: 1px solid var(--rule);
   font-family: var(--font-body);
   font-size: 15px;
-  transition: color .18s var(--ease-out), border-color .18s var(--ease-out);
+  transform-origin: left center;
+  will-change: transform;
+  transition: transform .32s cubic-bezier(.16, 1, .3, 1), color .18s var(--ease-out), border-color .18s var(--ease-out);
 }
 .rail .channels a:last-child { border-bottom: 0; }
 .rail .channels a .handle {
@@ -1214,6 +1216,40 @@ html.light-mode .spotlight-follow {
     mx = e.clientX; my = e.clientY;
     if (!raf) raf = requestAnimationFrame(apply);
   }, { passive: true });
+})();
+</script>
+<script>
+// ========== rail channels · dock magnetic ==========
+(function(){
+  if (matchMedia('(hover: none)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var pills = document.querySelectorAll('.rail .channels a');
+  if (!pills.length) return;
+  var container = document.querySelector('.rail .channels');
+  var range = 130;      // 生效竖向半径
+  var maxPush = 8;      // 最近行最多向右推 8px
+  var maxScale = 0.05;  // 最近行放大 1.05
+
+  window.addEventListener('pointermove', function(e){
+    pills.forEach(function(p){
+      var r = p.getBoundingClientRect();
+      var cy = r.top + r.height / 2;
+      var dy = e.clientY - cy;
+      var dist = Math.abs(dy);
+      if (dist < range){
+        var f = 1 - dist / range;    // 0..1
+        var tx = f * maxPush;
+        var sc = 1 + f * maxScale;
+        p.style.transform = 'translateX(' + tx.toFixed(2) + 'px) scale(' + sc.toFixed(3) + ')';
+      } else if (p.style.transform){
+        p.style.transform = '';
+      }
+    });
+  }, { passive: true });
+
+  container.addEventListener('pointerleave', function(){
+    pills.forEach(function(p){ p.style.transform = ''; });
+  });
 })();
 </script>
 </body>
