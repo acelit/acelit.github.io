@@ -185,6 +185,33 @@ body::before {
 .rail nav.anchors a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .rail nav.anchors a span { color: var(--ink-faint); font-variant-numeric: tabular-nums; }
 
+.rail .rail-search {
+  margin-top: var(--space-lg);
+}
+.rail .blog-search {
+  width: 100%;
+  padding: 10px 2px;
+  border: none;
+  border-bottom: 1.5px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color .18s var(--ease-out);
+}
+.rail .blog-search::placeholder { color: var(--ink-faint); font-size: 13px; }
+.rail .blog-search:focus-visible { border-bottom-color: var(--accent); box-shadow: 0 1.5px 0 0 var(--accent); }
+.rail .search-readout {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 6px;
+  letter-spacing: .04em;
+  min-height: 16px;
+}
+.rail .search-readout b { color: var(--accent-deep); font-weight: 500; }
+
 .rail .channels {
   display: flex; flex-direction: column; gap: 2px;
 }
@@ -798,6 +825,11 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
       </a>
     </div>
 
+    <div class="rail-search">
+      <input type="search" id="blogSearch" class="blog-search" placeholder="搜索文章/图文/视频" aria-label="搜索">
+      <div class="search-readout" id="searchReadout"></div>
+    </div>
+
     <nav class="anchors" aria-label="主内容">
       <a href="#deep">文章 <span>03</span></a>
       <a href="#notes">图文 <span>02</span></a>
@@ -1095,6 +1127,41 @@ html.light-mode .theme-toggle .icon-moon { display: none; }
   }
 
   ['articles','notes','videos'].forEach(render);
+
+  // ---- Search / filter ----
+  const searchInput = document.getElementById('blogSearch');
+  const searchReadout = document.getElementById('searchReadout');
+  const originalData = { articles: data.articles.slice(), notes: data.notes.slice(), videos: data.videos.slice() };
+  const totalItems = originalData.articles.length + originalData.notes.length + originalData.videos.length;
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      const kw = this.value.trim().toLowerCase();
+      if (!kw) {
+        data.articles = originalData.articles.slice();
+        data.notes = originalData.notes.slice();
+        data.videos = originalData.videos.slice();
+        if (searchReadout) searchReadout.innerHTML = '';
+      } else {
+        data.articles = originalData.articles.filter(function (it) {
+          const hay = ((it.title || '') + ' ' + (it.dek || '') + ' ' + (it.tag || '')).toLowerCase();
+          return hay.includes(kw);
+        });
+        data.notes = originalData.notes.filter(function (it) {
+          const hay = ((it.title || '') + ' ' + (it.tag || '') + ' ' + (it.cat || '')).toLowerCase();
+          return hay.includes(kw);
+        });
+        data.videos = originalData.videos.filter(function (it) {
+          const hay = ((it.title || '') + ' ' + (it.desc || '') + ' ' + (Array.isArray(it.tags) ? it.tags.join(' ') : '')).toLowerCase();
+          return hay.includes(kw);
+        });
+        const matched = data.articles.length + data.notes.length + data.videos.length;
+        if (searchReadout) searchReadout.innerHTML = '共 <b>' + matched + '</b> / ' + totalItems + ' 个项目';
+      }
+      pages.articles = 1; pages.notes = 1; pages.videos = 1;
+      ['articles','notes','videos'].forEach(render);
+    });
+  }
 })();
 </script>
 </body>
