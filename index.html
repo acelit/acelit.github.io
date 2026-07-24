@@ -864,9 +864,9 @@ html.light-mode .spotlight-follow {
     </div>
 
     <nav class="anchors" aria-label="主内容">
-      <a href="#deep">文章 <span>03</span></a>
-      <a href="#notes">图文 <span>02</span></a>
-      <a href="#videos">视频 <span>01</span></a>
+      <a href="#deep">文章 <span data-hb-count="articles">03</span></a>
+      <a href="#notes">图文 <span data-hb-count="notes">02</span></a>
+      <a href="#videos">视频 <span data-hb-count="videos">01</span></a>
     </nav>
   </aside>
 
@@ -1050,6 +1050,13 @@ html.light-mode .spotlight-follow {
   } catch (e) { data = { articles: [], notes: [], videos: [] }; }
   ['articles','notes','videos'].forEach(k => {
     (data[k] || []).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  });
+
+  // update left-rail nav counts to reflect real item counts per module
+  document.querySelectorAll('[data-hb-count]').forEach(el => {
+    const k = el.getAttribute('data-hb-count');
+    const n = (data[k] || []).length;
+    el.textContent = String(n).padStart(2, '0');
   });
 
   // page cursor per module
