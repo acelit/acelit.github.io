@@ -167,7 +167,7 @@ body::before {
 .rail .status b { color: var(--ink); font-weight: 500; letter-spacing: .04em; }
 
 .rail nav.anchors {
-  margin-top: 200px;
+  margin-top: 50px;
   display: flex; flex-direction: column; gap: 6px;
   font-family: var(--font-mono);
   font-size: 12px;
@@ -187,7 +187,7 @@ body::before {
 .rail nav.anchors a span { color: var(--ink-faint); font-variant-numeric: tabular-nums; }
 
 .rail .rail-search {
-  margin-top: var(--space-lg);
+  margin-top: 50px;
 }
 .rail .blog-search {
   width: 100%;
@@ -858,16 +858,16 @@ html.light-mode .spotlight-follow {
       </a>
     </div>
 
-    <div class="rail-search">
-      <input type="search" id="blogSearch" class="blog-search" placeholder="搜索文章/图文/视频" aria-label="搜索">
-      <div class="search-readout" id="searchReadout"></div>
-    </div>
-
     <nav class="anchors" aria-label="主内容">
       <a href="#deep">文章 <span data-hb-count="articles">03</span></a>
       <a href="#notes">图文 <span data-hb-count="notes">02</span></a>
       <a href="#videos">视频 <span data-hb-count="videos">01</span></a>
     </nav>
+
+    <div class="rail-search">
+      <input type="search" id="blogSearch" class="blog-search" placeholder="搜索文章/图文/视频" aria-label="搜索">
+      <div class="search-readout" id="searchReadout"></div>
+    </div>
   </aside>
 
   <main class="main">
