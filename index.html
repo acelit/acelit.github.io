@@ -804,9 +804,239 @@ html.light-mode .spotlight-follow {
 }
 @media (hover: none) { .spotlight-follow { display: none; } }
 @media (prefers-reduced-motion: reduce) { .spotlight-follow { display: none; } }
+
+/* ==========================================================
+   BOOT TERMINAL — 会话内首访播放一次的极客风命令行欢迎页
+   ========================================================== */
+html:not(.boot-on) #boot { display: none !important; }
+html.boot-on, html.boot-on body { overflow: hidden; }
+
+#boot {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 4vw, 40px);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  color: oklch(90% 0.01 250);
+  background:
+    radial-gradient(120% 90% at 50% -10%, oklch(22% 0.035 260) 0%, oklch(12% 0.022 260) 58%, oklch(8% 0.015 260) 100%);
+  transition: opacity .55s var(--ease-out), filter .55s var(--ease-out);
+}
+#boot.is-out { opacity: 0; filter: blur(7px) brightness(1.35); pointer-events: none; }
+
+/* CRT 扫描线 */
+#boot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    oklch(100% 0 0 / 0.035) 0 1px,
+    oklch(100% 0 0 / 0) 1px 3px
+  );
+  mix-blend-mode: screen;
+}
+/* 噪点 + 暗角 */
+#boot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .55;
+  background:
+    radial-gradient(115% 85% at 50% 45%, oklch(100% 0 0 / 0) 42%, oklch(0% 0 0 / .55) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: auto, 140px 140px;
+  animation: bootGrain .5s steps(3) infinite;
+}
+@keyframes bootGrain {
+  0%   { background-position: 0 0, 0 0; }
+  33%  { background-position: 0 0, -32px 18px; }
+  66%  { background-position: 0 0, 24px -26px; }
+  100% { background-position: 0 0, -14px -8px; }
+}
+
+.boot-win {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 100%);
+  animation: bootWinIn .5s var(--ease-out) both;
+}
+@keyframes bootWinIn {
+  from { opacity: 0; transform: translateY(10px) scale(.99); }
+  to   { opacity: 1; transform: none; }
+}
+
+.boot-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border: 1px solid oklch(34% 0.022 260);
+  border-bottom: 0;
+  border-radius: 10px 10px 0 0;
+  background: oklch(17% 0.022 260);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: oklch(62% 0.016 250);
+}
+.boot-dots { display: flex; gap: 6px; }
+.boot-dots i { width: 8px; height: 8px; border-radius: 50%; background: oklch(45% 0.02 260); }
+.boot-dots i:nth-child(1) { background: oklch(68% 0.15 25); }
+.boot-dots i:nth-child(2) { background: oklch(78% 0.13 85); }
+.boot-dots i:nth-child(3) { background: var(--spot); }
+.boot-bar .sp { flex: 1; }
+
+.boot-body {
+  padding: clamp(16px, 3vw, 28px) clamp(14px, 3vw, 30px) clamp(14px, 2.4vw, 22px);
+  border: 1px solid oklch(34% 0.022 260);
+  border-radius: 0 0 10px 10px;
+  background: oklch(13% 0.02 260 / .94);
+  box-shadow: 0 30px 90px -34px oklch(80% 0.14 230 / .3);
+}
+
+.boot-logo {
+  margin: 0 0 clamp(12px, 2vw, 18px);
+  white-space: pre;
+  font-size: clamp(6.6px, 2.32vw, 13px);
+  line-height: 1.06;
+  color: var(--accent);
+  text-shadow: 0 0 10px oklch(80% 0.14 230 / .3);
+  animation: bootLogoIn .55s var(--ease-out) both;
+}
+@keyframes bootLogoIn {
+  from { opacity: 0; filter: blur(3px); }
+  to   { opacity: 1; filter: none; }
+}
+.boot-sub {
+  margin: 0 0 clamp(14px, 2.4vw, 20px);
+  font-size: 10.5px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: oklch(56% 0.016 250);
+}
+
+.boot-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: clamp(12.5px, 1.45vw, 15px);
+  line-height: 1.7;
+  min-height: 8.5em;
+}
+.boot-lines .bl { white-space: pre-wrap; word-break: break-word; }
+.boot-lines .pfx { color: var(--accent); }
+.boot-lines .pfx .dim { color: oklch(52% 0.016 250); }
+.boot-lines .out .pfx { color: var(--spot); }
+.boot-lines .cmd { color: oklch(94% 0.008 250); }
+.boot-lines .out .txt { color: oklch(90% 0.01 250); }
+
+.boot-cur {
+  display: inline-block;
+  width: .58em;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -.18em;
+  background: var(--accent);
+  box-shadow: 0 0 10px oklch(80% 0.14 230 / .6);
+  animation: bootBlink 1s steps(1) infinite;
+}
+@keyframes bootBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+.boot-status {
+  margin-top: clamp(12px, 2vw, 18px);
+  font-size: clamp(11.5px, 1.3vw, 13.5px);
+  color: var(--spot);
+  opacity: 0;
+  transition: opacity .35s var(--ease-out);
+}
+.boot-status.on { opacity: 1; }
+.boot-status.wait { animation: bootPulse 1.7s var(--ease-out) infinite; }
+@keyframes bootPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .45; }
+}
+
+.boot-skip {
+  position: relative;
+  z-index: 1;
+  margin-top: 14px;
+  text-align: right;
+  font-size: 10.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: oklch(48% 0.014 250);
+  opacity: 0;
+  transition: opacity .5s var(--ease-out), color .4s var(--ease-out);
+}
+.boot-skip.on { opacity: 1; }
+.boot-skip.cta {
+  text-align: center;
+  font-size: clamp(11px, 1.15vw, 12.5px);
+  letter-spacing: .24em;
+  color: var(--accent);
+  animation: bootPulse 1.7s var(--ease-out) infinite;
+}
+
+@media (max-width: 560px) {
+  .boot-bar .hide-sm { display: none; }
+  .boot-lines { min-height: 11em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #boot::after { animation: none; }
+  .boot-win, .boot-logo { animation: none; }
+  .boot-cur { animation: none; }
+  .boot-status.wait, .boot-skip.cta { animation: none; }
+}
 </style>
+<script>
+/* boot gate：同一会话只播一次；带 #hash 直达时不播 */
+(function () {
+  try {
+    if (location.hash && location.hash.length > 1) return;
+    var k = 'hb_boot_session_v1';
+    if (!window.sessionStorage || !sessionStorage.getItem(k)) {
+      document.documentElement.classList.add('boot-on');
+      if (window.sessionStorage) sessionStorage.setItem(k, '1');
+    }
+  } catch (e) {
+    document.documentElement.classList.add('boot-on');
+  }
+})();
+</script>
 </head>
 <body>
+<div id="boot" role="dialog" aria-modal="true" aria-label="欢迎页：点击任意位置进入博客">
+  <div class="boot-win">
+    <div class="boot-bar">
+      <span class="boot-dots"><i></i><i></i><i></i></span>
+      <span>zzx — welcome.jiaxu</span>
+      <span class="sp"></span>
+      <span class="hide-sm">acelit.github.io</span>
+    </div>
+    <div class="boot-body">
+<div class="boot-logo" aria-hidden="true">██╗      █████╗  ██████╗        █████╗ 
+██║     ██╔══██╗██╔═══██╗      ██╔══██╗
+██║     ███████║██║   ██║      ███████║
+██║     ██╔══██║██║   ██║      ██╔══██║
+███████╗██║  ██║╚██████╔╝      ██║  ██║
+╚══════╝╚═╝  ╚═╝ ╚═════╝       ╚═╝  ╚═╝</div>
+      <p class="boot-sub">AI · Product · Future — acelit.github.io</p>
+
+      <div class="boot-lines" id="bootLines">
+        <div class="bl" id="bootCmdLine"><span class="pfx">visitor@acelit<span class="dim">:~ $</span></span> <span class="cmd" data-boot-txt></span></div>
+      </div>
+
+      <div class="boot-status" id="bootStatus">[ OK ] stream complete</div>
+    </div>
+    <div class="boot-skip" id="bootSkip">点击任意位置进入博客 · click anywhere to enter</div>
+  </div>
+</div>
 <div class="spotlight-follow" aria-hidden="true"></div>
 <div class="site-controls">
   <button type="button" class="theme-toggle" aria-label="切换深色/浅色模式" title="切换深色/浅色模式">
@@ -1397,6 +1627,151 @@ html.light-mode .spotlight-follow {
   container.addEventListener('pointerleave', function(){
     pills.forEach(function(p){ p.style.transform = ''; });
   });
+})();
+</script>
+<script>
+/* ==========================================================
+   BOOT TERMINAL — 逐行流式输出欢迎语（时间取访客本地时间）
+   ========================================================== */
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('boot-on')) return;
+
+  var boot   = document.getElementById('boot');
+  var lines  = document.getElementById('bootLines');
+  var cmdTxt = document.querySelector('#bootCmdLine [data-boot-txt]');
+  var status = document.getElementById('bootStatus');
+  var skip   = document.getElementById('bootSkip');
+
+  if (!boot || !lines || !cmdTxt) { root.classList.remove('boot-on'); return; }
+
+  try {
+    var MONTHS = ['January','February','March','April','May','June',
+                  'July','August','September','October','November','December'];
+    var now = new Date();
+    var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+    var hhmm = pad(now.getHours()) + ':' + pad(now.getMinutes());
+    var dateStr;
+    try {
+      dateStr = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    } catch (e) {
+      dateStr = MONTHS[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+    }
+
+    var CMD = './welcome.sh --stream';
+    var OUT = [
+      'It is ' + hhmm + ' on ' + dateStr + '.',
+      "Welcome to Lao A's personal blog.",
+      'Here, we explore the future together with AI.'
+    ];
+
+    var cursor = document.createElement('span');
+    cursor.className = 'boot-cur';
+    var cmdLine = cmdTxt.parentNode;
+
+    var timers = [], stopped = false, exiting = false, done = false;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function later(fn, ms) { var id = setTimeout(fn, ms); timers.push(id); return id; }
+    function clearAll() { for (var i = 0; i < timers.length; i++) clearTimeout(timers[i]); timers = []; }
+
+    function newOutRow() {
+      var row = document.createElement('div');
+      row.className = 'bl out';
+      var p = document.createElement('span');
+      p.className = 'pfx';
+      p.textContent = '>';
+      var t = document.createElement('span');
+      t.className = 'txt';
+      row.appendChild(p);
+      row.appendChild(document.createTextNode(' '));
+      row.appendChild(t);
+      lines.appendChild(row);
+      return t;
+    }
+
+    function type(target, text, speed, pause, next) {
+      target.parentNode.appendChild(cursor);
+      var i = 0;
+      (function step() {
+        if (stopped) return;
+        target.textContent = text.slice(0, ++i);
+        if (i < text.length) later(step, speed);
+        else later(next, pause);
+      })();
+    }
+
+    function finish() {
+      if (stopped) return;
+      done = true;
+      status.classList.add('on', 'wait');
+      skip.classList.add('on', 'cta');
+    }
+
+    /* 用户操作：动画中先快进到完整文本，已完成则进入博客 */
+    function act() {
+      if (exiting) return;
+      if (!done) { revealAll(); return; }
+      exit();
+    }
+
+    function revealAll() {
+      stopped = true;
+      clearAll();
+      cmdTxt.textContent = CMD;
+      lines.innerHTML = '';
+      lines.appendChild(cmdLine);
+      for (var i = 0; i < OUT.length; i++) newOutRow().textContent = OUT[i];
+      cmdLine.appendChild(cursor);
+      stopped = false;
+      finish();
+    }
+
+    function exit() {
+      if (exiting) return;
+      exiting = true;
+      stopped = true;
+      clearAll();
+      boot.classList.add('is-out');
+      window.removeEventListener('pointerdown', act);
+      window.removeEventListener('keydown', act);
+      window.removeEventListener('touchstart', act);
+      setTimeout(function () {
+        root.classList.remove('boot-on');
+        if (boot.parentNode) boot.parentNode.removeChild(boot);
+      }, 600);
+    }
+
+    /* 点击 / 按键 / 触摸 —— 滚轮不参与，避免误触 */
+    window.addEventListener('pointerdown', act);
+    window.addEventListener('keydown', act);
+    window.addEventListener('touchstart', act, { passive: true });
+
+    if (reduce) {
+      cmdTxt.textContent = CMD;
+      for (var i = 0; i < OUT.length; i++) newOutRow().textContent = OUT[i];
+      finish();
+      return;
+    }
+
+    later(function () { skip.classList.add('on'); }, 800);
+
+    /* 命令行 → 三行欢迎语 → 完成 */
+    later(function () {
+      type(cmdTxt, CMD, 26, 240, function () {
+        var i = 0;
+        (function nextLine() {
+          if (i >= OUT.length) return finish();
+          var t = newOutRow();
+          var text = OUT[i++];
+          type(t, text, 14, 150, nextLine);
+        })();
+      });
+    }, 460);
+  } catch (err) {
+    root.classList.remove('boot-on');
+    if (boot && boot.parentNode) boot.parentNode.removeChild(boot);
+  }
 })();
 </script>
 </body>
