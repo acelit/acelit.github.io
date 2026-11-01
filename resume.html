@@ -33,6 +33,23 @@
     .project ol { padding-left: 10mm; list-style: none; counter-reset: detail; }
     .project li { position: relative; text-align: justify; counter-increment: detail; }
     .project li::before { content: counter(detail) "、"; position: absolute; left: -8mm; }
+    body.locked { overflow: hidden; }
+    main:focus { outline: none; }
+    .locked main { filter: blur(8px); user-select: none; pointer-events: none; }
+    .password-gate { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; overflow: auto; padding: 24px; background: rgb(255 255 255 / .8); font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.5; }
+    .password-gate[hidden] { display: none; }
+    .gate-panel { width: 360px; max-width: 100%; padding: 28px; background: #fff; border: 1px solid #e0e3e8; border-radius: 12px; box-shadow: 0 12px 48px #00000014; }
+    .gate-title { margin: 0 0 8px; padding: 0; background: none; color: #1b2433; font-size: 24px; line-height: 1.4; font-weight: 600; }
+    .gate-help { margin-bottom: 24px; color: #58616e; font-size: 14px; }
+    .gate-label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+    .gate-input { width: 100%; padding: 12px; border: 1px solid #aeb5bf; border-radius: 6px; font: inherit; font-size: 16px; }
+    .gate-input:focus-visible { outline: 2px solid #184ea1; outline-offset: 2px; }
+    .gate-input[aria-invalid="true"] { border-color: #b42318; }
+    .gate-error { min-height: 24px; margin: 8px 0; color: #b42318; font-size: 14px; }
+    .gate-button { width: 100%; border: 0; border-radius: 6px; padding: 12px; background: #184ea1; color: #fff; cursor: pointer; font: inherit; font-size: 16px; font-weight: 600; }
+    .gate-button:hover { background: #123d80; }
+    .gate-button:focus-visible { outline: 2px solid #184ea1; outline-offset: 3px; }
+    .gate-noscript { margin-top: 12px; color: #b42318; font-size: 14px; }
     @media screen and (max-width: 820px) {
       body { padding: 0; background: #fff; font-size: 16px; line-height: 1.65; }
       .page { width: 100%; min-height: 0; padding: 24px 20px; margin: 0; box-shadow: none; }
@@ -64,11 +81,28 @@
       .page { margin: 0; box-shadow: none; break-after: page; }
       .page:last-child { break-after: auto; }
       h2 { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .locked main { display: none; }
+      .locked .password-gate { position: static; background: #fff; }
+      .locked .gate-panel { border: 0; box-shadow: none; }
+      .locked .gate-panel form { display: none; }
     }
   </style>
 </head>
-<body>
-<main aria-label="张志祥简历">
+<body class="locked">
+<div class="password-gate" id="password-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-help">
+  <section class="gate-panel">
+    <h2 class="gate-title" id="gate-title">查看简历</h2>
+    <p class="gate-help" id="gate-help">请输入密码查看完整简历。</p>
+    <form id="password-form" novalidate>
+      <label class="gate-label" for="resume-password">访问密码</label>
+      <input class="gate-input" id="resume-password" name="password" type="password" autocomplete="current-password" aria-describedby="password-error" required autofocus>
+      <p class="gate-error" id="password-error" role="status" aria-live="polite"></p>
+      <button class="gate-button" type="submit">查看简历</button>
+    </form>
+    <noscript><p class="gate-noscript">请启用 JavaScript 后输入密码。</p></noscript>
+  </section>
+</div>
+<main aria-label="张志祥简历" aria-hidden="true" inert tabindex="-1">
   <article class="page" aria-label="简历第 1 页">
     <header class="resume-header">
       <div class="header-copy">
@@ -138,5 +172,58 @@
     </section>
   </article>
 </main>
+<script>
+  const gate = document.getElementById('password-gate');
+  const passwordForm = document.getElementById('password-form');
+  const passwordInput = document.getElementById('resume-password');
+  const passwordError = document.getElementById('password-error');
+  const resume = document.querySelector('main');
+  const submitButton = passwordForm.querySelector('button');
+
+  passwordForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    if (passwordInput.value !== 'ZZX') {
+      passwordError.textContent = passwordInput.value ? '密码不正确，请重试。' : '请输入密码。';
+      passwordInput.setAttribute('aria-invalid', 'true');
+      passwordInput.focus();
+      passwordInput.select();
+      return;
+    }
+    passwordInput.value = '';
+    gate.hidden = true;
+    document.body.classList.remove('locked');
+    resume.inert = false;
+    resume.removeAttribute('aria-hidden');
+    resume.focus({ preventScroll: true });
+  });
+
+  passwordInput.addEventListener('input', () => {
+    passwordInput.removeAttribute('aria-invalid');
+    passwordError.textContent = '';
+  });
+
+  gate.addEventListener('keydown', (event) => {
+    if (event.key !== 'Tab') return;
+    if (event.shiftKey && document.activeElement === passwordInput) {
+      event.preventDefault();
+      submitButton.focus();
+    } else if (!event.shiftKey && document.activeElement === submitButton) {
+      event.preventDefault();
+      passwordInput.focus();
+    }
+  });
+
+  window.addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+    gate.hidden = false;
+    document.body.classList.add('locked');
+    resume.inert = true;
+    resume.setAttribute('aria-hidden', 'true');
+    passwordError.textContent = '';
+    passwordInput.removeAttribute('aria-invalid');
+    passwordInput.value = '';
+    passwordInput.focus();
+  });
+</script>
 </body>
 </html>
